@@ -1,0 +1,32 @@
+<div class="container">
+<div class="alert alert-info collapse" role="alert" id="markdownCopied">The formatting code was copied to your clipboard!</div>
+<div class="row">
+  <div class="col-md-8">
+		<h4><a href="//www.reddit.com/u/<%= user.name %>">/u/<%= user.name %></a>'s Karma Breakdown</h4>
+		<h4>Post Karma: <%= user.link_karma %></h4>
+		<h4>Comment Karma: <%= user.comment_karma %></h4>
+	</div>
+  <div class="col-md-4 text-right">
+  	<p><a class="btn btn-info btn-lg btn-block" href="<%= user.submit_link %>" role="button">Create Post</a></p>
+  	<p><em>(this <strong>will not</strong> submit the post on your behalf)</em></p>
+  	<button type="button" class="btn btn-default btn-lg btn-block" data-toggle="collapse" data-clipboard-text="<%= user.markdown %>" href="#markdownCopied">Copy Markdown to Clipboard</button>
+  </div>
+	  <table class="table table-striped">
+	    <thead>
+	      <tr>
+	        <th>Subreddit</th>
+	        <th>Post Karma</th>
+	        <th>Comment Karma</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	    <% for (var i = 0; i < user.breakdown.length; i++) { %>
+	    <tr>
+	    	<td><a href='<%= user.breakdown[i].subreddit_link %>'><%= user.breakdown[i].subreddit_name %></a></td>
+	    	<td><%= user.breakdown[i].link_karma %></td>
+	     	<td><%= user.breakdown[i].comment_karma %></td>
+	      </tr>
+	      <% } %>   
+	    </tbody>
+	  </table>
+</div>
