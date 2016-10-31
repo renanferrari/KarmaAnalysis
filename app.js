@@ -1,7 +1,7 @@
 var express = require('express')
+  , expressLayouts = require('express-ejs-layouts')
   , session = require('express-session')
   , request = require('request')
-  , expressLayouts = require('express-ejs-layouts')
   , logger = require('morgan')
   , passport = require('passport')
   , util = require('util')
@@ -36,7 +36,6 @@ passport.use(new RedditStrategy({
     clientID: REDDIT_CLIENT_ID,
     clientSecret: REDDIT_CLIENT_SECRET,
     callbackURL: "http://127.0.0.1:3000/auth/reddit/callback"
-    // state: true
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
@@ -46,6 +45,7 @@ passport.use(new RedditStrategy({
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Reddit account with a user record in your database,
       // and return that user instead.
+      profile.token = accessToken;
       return done(null, profile);
     });
   }
@@ -82,7 +82,9 @@ app.get('/', ensureAuthenticated, function(req, res){
     json: true
   }, function(error, response, body) {
     if (error) {
-      return console.error('Error:', error);
+      return console.error('Error: ', error);
+    } else if (response.statusCode !== 200) {
+      return console.error('Error: ', response);
     } else {
       for(var i = 0; i < body.data.length; i++) {
       var subredditName = body.data[i].sr;
