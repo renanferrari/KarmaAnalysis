@@ -35,7 +35,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new RedditStrategy({
     clientID: REDDIT_CLIENT_ID,
     clientSecret: REDDIT_CLIENT_SECRET,
-    callbackURL: "http://127.0.0.1:3000/auth/reddit/callback"
+    callbackURL: "http://karma-analysis.herokuapp.com/auth/reddit/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
